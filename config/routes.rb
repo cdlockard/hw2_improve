@@ -1,4 +1,6 @@
 Rottenpotatoes::Application.routes.draw do
+
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -14,6 +16,9 @@ Rottenpotatoes::Application.routes.draw do
   #   resources :products
   resources :movies
 
+  #added by Colin on 3/1/13:
+  root :to => redirect('/movies')
+  
   # Sample resource route with options:
   #   resources :products do
   #     member do
