@@ -7,22 +7,36 @@ class MoviesController < ApplicationController
   end
 
   def index
-
+    #if session==nil
+    #  session=Hash.new
+    #end
+    #session.clear
     @all_ratings=Movie.get_ratings
     if params[:ratings] != nil
+      session[:ratings] = params[:ratings]
       @ratings_checked=params[:ratings].keys
     else
-      @ratings_checked=@all_ratings
+      if session[:ratings] != nil
+        @ratings_checked=session[:ratings].keys
+      else
+        @ratings_checked=@all_ratings
+      end
     end
     @checked_ratings_hash=params[:ratings]
     if params[:sort]=="title"
       @movies=Movie.where(:rating => @ratings_checked).order("title")
       @hilite_title="hilite"
+      session[:sort]=params[:sort]
     elsif params[:sort]=="release_date"
       @movies=Movie.where(:rating => @ratings_checked).order("release_date")
       @hilite_release="hilite"
+      session[:sort]=params[:sort]
     else
-      @movies = Movie.where(:rating => @ratings_checked)
+      if session[:sort] != nil
+        @movies = Movie.where(:rating => @ratings_checked).order(session[:sort])
+      else
+        @movies = Movie.where(:rating => @ratings_checked)
+      end
     end
 
   end
