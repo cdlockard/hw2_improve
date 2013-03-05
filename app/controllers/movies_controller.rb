@@ -7,20 +7,26 @@ class MoviesController < ApplicationController
   end
 
   def index
-    #if session==nil
-    #  session=Hash.new
-    #end
-    #session.clear
+
+    #Check to see if params has data. If it is missing one or more items that are
+    #saved in sessions hash, 
+    if (params[:ratings]==nil or params[:sort]==nil) and (session[:ratings] != nil or session[:sort] != nil)
+      if params[:ratings]==nil and session[:ratings] != nil
+        params[:ratings]=session[:ratings]
+      end
+      if params[:sort]==nil and session[:sort] !=nil
+        params[:sort]=session[:sort]
+      end
+      flash.keep
+      redirect_to movies_path :ratings=>params[:ratings], :sort=>params[:sort]
+    end
+
     @all_ratings=Movie.get_ratings
     if params[:ratings] != nil
       session[:ratings] = params[:ratings]
       @ratings_checked=params[:ratings].keys
     else
-      if session[:ratings] != nil
-        @ratings_checked=session[:ratings].keys
-      else
-        @ratings_checked=@all_ratings
-      end
+      @ratings_checked=@all_ratings
     end
     @checked_ratings_hash=params[:ratings]
     if params[:sort]=="title"
@@ -32,11 +38,7 @@ class MoviesController < ApplicationController
       @hilite_release="hilite"
       session[:sort]=params[:sort]
     else
-      if session[:sort] != nil
-        @movies = Movie.where(:rating => @ratings_checked).order(session[:sort])
-      else
-        @movies = Movie.where(:rating => @ratings_checked)
-      end
+      @movies = Movie.where(:rating => @ratings_checked)
     end
 
   end
