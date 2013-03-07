@@ -7,10 +7,11 @@ class MoviesController < ApplicationController
   end
 
   def index
-
+    #session.clear
     #Check to see if params has data. If it is missing one or more items that are
     #saved in sessions hash, 
-    if (params[:ratings]==nil or params[:sort]==nil) and (session[:ratings] != nil or session[:sort] != nil)
+    if (params[:ratings]==nil and session[:ratings]!=nil) or (params[:sort]==nil and session[:sort]!=nil)
+    #if (params[:ratings]==nil or params[:sort]==nil) and (session[:ratings] != nil or session[:sort] != nil)
       if params[:ratings]==nil and session[:ratings] != nil
         params[:ratings]=session[:ratings]
       end
