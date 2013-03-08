@@ -59,7 +59,8 @@ form label {
   font-weight: bold;
   color: maroon;
 }
-
+/*Feb 28 HW2 Colin added:*/
 table#movies th.hilite {
   background-color: yellow;
 }
+/*******************/

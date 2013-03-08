@@ -1,8 +1,9 @@
 -#  This file is app/views/movies/index.html.haml
 %h2 All Movies
 -#March 2, HW 2, Colin added ratings form//March 4 added ratings_form and ratings_submit:
-= form_tag movies_path, :id => "ratings_form",:method => :get do
+= form_tag movies_path, {:id => "ratings_form",:method => :get} do
   Include: 
+  = hidden_field_tag(:sort, params[:sort]) #used to persist sorting if a rating selection is made(this is unnecessary when session is being used but I left it in to show how I did it before implementing session)
   - @all_ratings.each do |rating|
     = rating
     = check_box_tag "ratings[#{rating}]", 1, (@ratings_checked.include?(rating)), :id=>"ratings_#{rating}"
@@ -11,12 +12,12 @@
 %table#movies
   %thead
     %tr
-      -# Feb 21, HW2, Colin added link// Feb 28 added hilite//March 2 added @checked_ratings_hash:
-      %th{:id => "title", :class => @hilite_title}= link_to "Movie Title", movies_path({:sort=>"title", :ratings=>@checked_ratings_hash})
+      -# Feb 21, HW2, Colin added link// Feb 28 added hilite//
+      %th{:id => "title", :class => @hilite_title}= link_to "Movie Title", movies_path({:sort=>"title", :ratings=>params[:ratings]})
       -#*-------*/
       %th Rating
-      -# Feb 21, HW2, Colin added link// Feb 28 added hilite//March 2 added @checked_ratings_hash:
-      %th{:id => "title", :class => @hilite_release}= link_to "Release Date", movies_path({:sort=>"release_date", :ratings=>@checked_ratings_hash})
+      -# Feb 21, HW2, Colin added link// Feb 28 added hilite//
+      %th{:id => "title", :class => @hilite_release}= link_to "Release Date", movies_path({:sort=>"release_date", :ratings=>params[:ratings]})
       -#*-------*/
       %th More Info
   %tbody

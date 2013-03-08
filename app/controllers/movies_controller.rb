@@ -7,7 +7,6 @@ class MoviesController < ApplicationController
   end
 
   def index
-
     #March 5, HW2: Colin added session hash information:
     #Check to see if params has data. If it is missing one or more items that are
     #saved in sessions hash, pass sessions info into params and reload
@@ -28,13 +27,9 @@ class MoviesController < ApplicationController
     if params[:ratings] != nil #if user has previously selected certain ratings, add to session and populate checkboxes
       session[:ratings] = params[:ratings]
       @ratings_checked=params[:ratings].keys
-    else #otherwise, if no value in params(meaning user either hasn't made a selection or has deselected all), check all boxes
+    else #otherwise, if no value in params(meaning user either hasn't made a selection or has deselected all(and nothing is present in session)), check all boxes
       @ratings_checked=@all_ratings
     end
-    #*----------*#
-
-    #March 2 HW2, Colin added @checked_ratings_hash
-    @checked_ratings_hash=params[:ratings]
     #*----------*#
 
     #Feb 28 HW2, Colin added sorting by title/release date and hiliting:
