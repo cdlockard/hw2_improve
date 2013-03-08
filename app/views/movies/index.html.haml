@@ -1,18 +1,23 @@
 -#  This file is app/views/movies/index.html.haml
 %h2 All Movies
-=debug(session)
+-#March 2, HW 2, Colin added ratings form//March 4 added ratings_form and ratings_submit:
 = form_tag movies_path, :id => "ratings_form",:method => :get do
   Include: 
   - @all_ratings.each do |rating|
     = rating
     = check_box_tag "ratings[#{rating}]", 1, (@ratings_checked.include?(rating)), :id=>"ratings_#{rating}"
   = submit_tag 'Refresh', :id => "ratings_submit"
+-#*-------*/
 %table#movies
   %thead
     %tr
+      -# Feb 21, HW2, Colin added link// Feb 28 added hilite//March 2 added @checked_ratings_hash:
       %th{:id => "title", :class => @hilite_title}= link_to "Movie Title", movies_path({:sort=>"title", :ratings=>@checked_ratings_hash})
+      -#*-------*/
       %th Rating
+      -# Feb 21, HW2, Colin added link// Feb 28 added hilite//March 2 added @checked_ratings_hash:
       %th{:id => "title", :class => @hilite_release}= link_to "Release Date", movies_path({:sort=>"release_date", :ratings=>@checked_ratings_hash})
+      -#*-------*/
       %th More Info
   %tbody
     - @movies.each do |movie|
